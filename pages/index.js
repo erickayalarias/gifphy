@@ -23,7 +23,7 @@ import { ToastContainer } from "react-toastify";
 export default function Home() {
     const [searchBar, setsearchBar] = useState("");
     const router = useRouter();
-    const { state } = useContext(LoginContext);
+    const { state, checkuserisloggedin } = useContext(LoginContext);
     const [userLogged, setuserLogged] = useState(false);
     const { gifData } = useContext(GifContextMine);
     const [visible, setVisible] = useState(false);
@@ -39,6 +39,7 @@ export default function Home() {
                 setloggedorNot("Login");
             }
         });
+        checkuserisloggedin()
     }, []);
     useEffect(() => {
         if (gifData) {

@@ -18,7 +18,6 @@ export const GifProvider = ({ children }) => {
             datos.push(data);
         });
         const data = await axios.get("https://api.giphy.com/v1/gifs/search?api_key=GLym9agNBp8lNCQWODUF6gIUWUDJHLmk&q=happy&limit=5&offset=0&rating=g&lang=en");
-      
         const apiData = []
         data.data.data.forEach((gif) => {
             apiData.push({

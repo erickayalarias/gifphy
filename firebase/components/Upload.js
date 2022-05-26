@@ -6,6 +6,7 @@ import { storage } from "../config";
 import { data } from "../firebase";
 import { LoginContext } from "../../context/loginContext";
 import { GifContextMine } from "../../context/GifContext";
+import { toast } from "react-toastify";
 
 export const Upload = ({onUpload}) => {
   const { state } = useContext(LoginContext)
@@ -15,6 +16,7 @@ export const Upload = ({onUpload}) => {
   const [files, setFiles] = useState([]);
   const [categorySelected, setcategorySelected] = useState("")
   const [title, setTitle] = useState("")
+  const [buttonUploaded, setbuttonUploaded] = useState("Upload GIF")
   const {
     getRootProps,
     getInputProps,
@@ -42,9 +44,9 @@ export const Upload = ({onUpload}) => {
   }
 
   const HandleClickButton = async () => {
-
     if (gifImage) {
       if (gifImage.name) {
+        setbuttonUploaded("Uploading...")
         const fetchedgif = await uploadGif(gifImage.name, gifImage)
         await data(title, categorySelected, state.user, fetchedgif)
         const infoUser = {
@@ -54,7 +56,15 @@ export const Upload = ({onUpload}) => {
           title: title
         }
         addUser(infoUser)
+        // empty all
+        setgifImage("")
+        setUrl("")
+        setTitle("")
+        setcategorySelected("")
+        setFiles([])
         onUpload()
+        setbuttonUploaded("Upload GIF")
+        toast.success("Gif uploaded successfully")
       } else {
         await data(title, categorySelected, state.user, gifImage)
         const infoUser = {
@@ -64,7 +74,14 @@ export const Upload = ({onUpload}) => {
           title: title
         }
         addUser(infoUser)
+        // empty all
+        setgifImage("")
+        setUrl("")
+        setTitle("")
+        setcategorySelected("")
+        setFiles([])
         onUpload()
+        toast.success("Gif uploaded successfully")
       }
     }
 
@@ -72,14 +89,13 @@ export const Upload = ({onUpload}) => {
 
   const uploadGif = async (name, file) => {
     const storageRef = ref(storage, name);
-    const uploadFile = await uploadBytes(storageRef, file);
+    await uploadBytes(storageRef, file);
     var url = await getDownloadURL(storageRef);
-
     return url;
    }
   useEffect(() => {
     if (url) {
-      if(url.includes("giphy.com")){
+      if(url.includes("giphy.com/media")){
         setgifImage(url)
       }
     }
@@ -162,10 +178,10 @@ export const Upload = ({onUpload}) => {
                   y={2}
                 />
                 <Button
-                  disabled={!title || !categorySelected}
+                  disabled={!title || !categorySelected || buttonUploaded === "Uploading..."}
                   onClick={HandleClickButton}
                 >
-              Upload Gif
+              {buttonUploaded}
                 </Button>
               
         </Card>
@@ -173,10 +189,6 @@ export const Upload = ({onUpload}) => {
         </div>
       )
       }
-  
-    <div>Upload
-    
-    </div>
     </>
   )
 }
