@@ -26,7 +26,7 @@ export const Upload = ({onUpload}) => {
     maxFiles: 1,
     maxSize: 26214400,
     onDropAccepted: (acceptedFiles) => {
-      console.log(acceptedFiles)
+    
       setgifImage(acceptedFiles[0])
       setFiles(
         acceptedFiles.map((file) =>
@@ -42,7 +42,7 @@ export const Upload = ({onUpload}) => {
   }
 
   const HandleClickButton = async () => {
-    console.log(gifImage)
+
     if (gifImage) {
       if (gifImage.name) {
         const fetchedgif = await uploadGif(gifImage.name, gifImage)
@@ -74,7 +74,7 @@ export const Upload = ({onUpload}) => {
     const storageRef = ref(storage, name);
     const uploadFile = await uploadBytes(storageRef, file);
     var url = await getDownloadURL(storageRef);
-    console.log(url)
+
     return url;
    }
   useEffect(() => {

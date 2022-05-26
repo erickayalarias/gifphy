@@ -59,7 +59,7 @@ export default function Home() {
             setgifdataState(gifData.gif);
         }
         if (e.target.value !== "" ) {
-            console.log(gifData.gif)
+     
             const newGifData = gifData.gif.filter((gif) => {
                 return gif.title.toLowerCase().includes(e.target.value.toLowerCase());
             });
