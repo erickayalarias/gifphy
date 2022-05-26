@@ -1,5 +1,5 @@
 import { getDatabase } from "../firebase/firebase";
-import { gifReducer } from "./gifReducer";
+import { gifReducer } from "./GifReducer";
 import { createContext, useReducer, useEffect } from "react";
 import { GifContextMine } from "./GifContext";
 import axios from "axios";

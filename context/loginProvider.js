@@ -2,7 +2,7 @@ import { onAuthStateChanged, onIdTokenChanged } from "firebase/auth";
 import { createContext, useReducer, useEffect } from "react";
 import { auth } from "../firebase/config";
 import { LoginContext } from "./loginContext";
-import { loginReducer } from "./loginReducer";
+import { loginReducer } from "./LoginReducer";
 
 const initialState = {
     isLoggedIn: true,
